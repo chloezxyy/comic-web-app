@@ -1,0 +1,43 @@
+nav {
+  display: flex;
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 4px 0;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  list-style: none;
+}
+
+.button {
+  background-color: #0750d8;
+  color: white;
+  font-weight: bold;
+  padding: 3px 0 3px;
+  border-radius: 4px;
+  border: 2px solid rgb(255, 81, 0);
+  box-shadow: 0 0 3px rgb(0 0 0);
+  cursor: pointer;
+  /* font-family: "Patrick Hand SC", cursive; */
+}
+
+#search-container {
+  justify-content: space-around;
+  text-align: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  text-decoration: none;
+  list-style: none;
+}

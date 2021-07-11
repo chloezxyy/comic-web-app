@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Comic App</title>
+  </head>
+  <!-- execute JS func immediately after page has loaded -->
+  <body onload="getOnLoad()">
+    <div>
+      <h2 class="title">COMICCCZZ</h2>
+      <nav>
+        <button id="first" class="button">First</button>
+        <button id="prev" class="button">Prev</button>
+        <button id="random" class="button">Random</button>
+        <button id="next" class="button">Next</button>
+        <button id="last" class="button">Last</button>
+      </nav>
+      <div id="search-container">
+        <label for="searchInput">
+          Search comic number from 1 to
+          <span id="lastInput">6 </span>
+        </label>
+        <br />
+        <br />
+        <input type="number" id="searchInput" min="1" />
+        <button class="button search" id="searchBtn">Search</button>
+      </div>
+      <div id="content">
+        <br />
+        <div id="comicTitle" class="comicTitle">Put title here</div>
+        <br />
+        <img
+          id="comicImg"
+          src=""
+          alt="comic img here"
+          style="max-width: 100%; height: auto"
+        />
+      </div>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+  </body>
+</html>
