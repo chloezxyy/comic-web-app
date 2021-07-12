@@ -58,28 +58,28 @@ async function showComic() {
         }`;
       }
 
-      comicImgPrev.style.maxWidth = "50%";
+      comicImgPrev.style.maxWidth = "20%";
       comicImgPrev.style.height = "auto";
       comicImgPrev.src = comicJson[i].img;
 
-      comicImg.style.maxWidth = "50%";
+      comicImg.style.maxWidth = "40%";
       comicImg.style.height = "auto";
       comicImg.src = comicJson[i + 1].img;
 
-      comicImgNext.style.maxWidth = "50%";
+      comicImgNext.style.maxWidth = "20%";
       comicImgNext.style.height = "auto";
       comicImgNext.src = comicJson[i + 2].img;
 
       // assign num to current var curComic
-      curComic = comicJson[i].num;
-      console.log("curComic", curComic);
 
-      // get the last val of the comic endpoint
+      curComic = comicJson[i].num;
+      console.log("hiak", lastComic);
+
       if (comicId === 6) {
         // onload to define last comic
         lastComic = comicJson[i].num;
         console.log("hiak", lastComic);
-        lastInput.innerHTML = lastComic + 2;
+        lastInput.innerHTML = lastComic + 1;
       } else {
         // if img not loading properly
         console.log("no comic displaying");
@@ -155,9 +155,6 @@ const getRandom = () => {
 const getSearch = () => {
   const searchInputValue = document.getElementById("searchInput").value;
   if (searchInputValue === "") {
-    return;
-  } else if (searchInputValue >= 8 || searchInputValue < 1) {
-    alert("invalid page #");
     return;
   }
   comicId = searchInputValue;
