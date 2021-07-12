@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <br />
+
     <title>Comic App</title>
   </head>
   <!-- execute JS func immediately after page has loaded -->
@@ -17,7 +19,13 @@
         <button id="random" class="button">Random</button>
         <button id="next" class="button">Next</button>
         <button id="last" class="button">Last</button>
+        <select id="viewSelection">
+          <option value="1">1 comic</option>
+          <option value="2">2 comics</option>
+          <option value="3">3 comics</option>
+        </select>
       </nav>
+      <br />
       <div id="search-container">
         <label for="searchInput">
           Search comic number from 1 to
@@ -25,18 +33,37 @@
         </label>
         <br />
         <br />
+        <div hidden id="spinner"></div>
         <input type="number" id="searchInput" min="1" />
         <button class="button search" id="searchBtn">Search</button>
       </div>
       <div id="content">
         <br />
-        <div id="comicTitle" class="comicTitle">Put title here</div>
         <br />
+        <div id="prevComicTitle" class="prevComicTitle">prevComicTitle</div>
+        <img
+          id="comicImgPrev"
+          src=""
+          alt="comic img here"
+          style="max-width: 10%; height: auto"
+        />
+        <br />
+        <br />
+        <div id="comicTitle" class="comicTitle">ComicTitle</div>
         <img
           id="comicImg"
           src=""
           alt="comic img here"
           style="max-width: 100%; height: auto"
+        />
+        <br />
+        <br />
+        <div id="nextComicTitle" class="nextComicTitle">nextComicTitle</div>
+        <img
+          id="comicImgNext"
+          src=""
+          alt="comic img here"
+          style="max-width: 10%; height: auto"
         />
       </div>
     </div>

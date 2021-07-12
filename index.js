@@ -1,49 +1,90 @@
 // list of comic endpoints with CORS enabled
 // https://xkcd.vercel.app/?comic=1
 // https://xkcd.vercel.app/?comic=2
-// https://xkcd.vercel.app/?comic=3
-// https://xkcd.vercel.app/?comic=4
-// https://xkcd.vercel.app/?comic=5
-// https://xkcd.vercel.app/?comic=6
+// .....
 
-// (function getComics() {
-//   fetch("https://xkcd.vercel.app/?comic=1")
-//     .then((response) => {
-//       console.log("resss", response);
-//       return response.json();
-//     })
-//     .then((data) => console.log("HERE ZE ADATA", data));
-// })();
+// function getData() {
+//   let firstAPICall = fetch(`https://xkcd.vercel.app/?comic=${comicId}`);
+//   let secondAPICall = fetch("https://api.endpoint.com/second");
 
-// vars to keep track of the index of the comic for next, prev button
+//   Promise.all([firstAPICall, secondAPICall])
+//     .then(values => Promise.all(values.map(value => value.json())))
+//     .then(finalVals => {
+//       let firstAPIResp = finalVals[0];
+//       let secondAPIResp = finalVals[1];
+//       renderHTML(firstAPIResp, secondAPIResp);
+//     });
+// }
 
+const spinner = document.getElementById("spinner");
 let curComic = "";
 let lastComic = "";
 // convert comicId from string to int
 let comicId = 1;
-console.log("comicId", comicId);
+let prevComicId = comicId - 1;
+let nextComicId = comicId + 1;
+
+const dropDownSelection = () => {
+  // if select 1, hide both left and right comic, left middle
+  // if select 2, hide left
+  // if select 3, show all -> default 3 screens
+};
 
 const getComic = () =>
+  // convert to Promise.all
   fetch(`https://xkcd.vercel.app/?comic=${comicId}`)
     .then((res) => res.json())
     .then((data) => data);
+fetch(`https://xkcd.vercel.app/?comic=${prevComicId}`)
+  .then((res) => res.json())
+  .then((data) => data);
+fetch(`https://xkcd.vercel.app/?comic=${nextComicId}`)
+  .then((res) => res.json())
+  .then((data) => data);
 
-const showComic = async () => {
+const showComic = async (selectedOption) => {
+  // get next, cur and prev comics
   let comicJson = await getComic();
-  const comicTitle = document.querySelector("#comicTitle");
-  const comicImg = document.querySelector("#comicImg");
-  const lastInput = document.querySelector("#lastInput");
 
   // if there is comic image
   console.log("comicJson", comicJson);
   if (comicJson.img) {
     // display comic # and title
+    if (comicJson.num !== 1) {
+      prevComicTitle.innerHTML = `${comicJson.num - 1} - ${comicJson.title}`;
+    } else {
+      prevComicTitle.innerHTML = "Start";
+    }
     comicTitle.innerHTML = `${comicJson.num} - ${comicJson.title}`;
+    if (comicJson.num + 1 <= lastComic) {
+      nextComicTitle.innerHTML = `${comicJson.num + 1} - ${comicJson.title}`;
+    } else {
+      nextComicTitle.innerHTML = "End";
+    }
 
     // styling
-    comicImg.style.maxWidth = "100%";
+    // hide this if selectedOption == 2 and == 1
+    console.log("curComic", curComic);
+    if (!curComic) {
+      comicImgPrev.style.visibility = "hidden";
+    } else {
+      comicImgPrev.style.maxWidth = "10%";
+      comicImgPrev.style.height = "auto";
+      comicImgPrev.src = comicJson.img;
+    }
+
+    comicImg.style.maxWidth = "50%";
     comicImg.style.height = "auto";
     comicImg.src = comicJson.img;
+
+    // hide this if selectedOption == 1
+    if (comicJson.num + 1 <= lastComic) {
+      comicImgNext.style.maxWidth = "10%";
+      comicImgNext.style.height = "auto";
+      comicImgNext.src = comicJson.img;
+    } else {
+      comicImgNext.style.visibility = "hidden";
+    }
 
     // assign num to current var curComic
     curComic = comicJson.num;
@@ -96,7 +137,7 @@ const getPrev = () => {
     return;
   }
   comicId = curComic - 1;
-  showComic;
+  showComic();
 };
 
 const getRandom = () => {
