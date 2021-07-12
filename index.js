@@ -12,8 +12,6 @@ let prevComicId = comicId - 1;
 let nextComicId = comicId + 1;
 
 async function getComic() {
-  console.log("indexes", prevComicId, comicId, nextComicId);
-
   let prevComicFetch = fetch(
     `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${prevComicId}`
   );
@@ -60,7 +58,7 @@ async function showComic() {
         }`;
       }
 
-      comicImgPrev.style.maxWidth = "10%";
+      comicImgPrev.style.maxWidth = "50%";
       comicImgPrev.style.height = "auto";
       comicImgPrev.src = comicJson[i].img;
 
@@ -68,20 +66,20 @@ async function showComic() {
       comicImg.style.height = "auto";
       comicImg.src = comicJson[i + 1].img;
 
-      comicImgNext.style.maxWidth = "10%";
+      comicImgNext.style.maxWidth = "50%";
       comicImgNext.style.height = "auto";
       comicImgNext.src = comicJson[i + 2].img;
 
       // assign num to current var curComic
-
       curComic = comicJson[i].num;
-      console.log("hiak", lastComic);
+      console.log("curComic", curComic);
 
+      // get the last val of the comic endpoint
       if (comicId === 6) {
         // onload to define last comic
         lastComic = comicJson[i].num;
         console.log("hiak", lastComic);
-        lastInput.innerHTML = lastComic + 1;
+        lastInput.innerHTML = lastComic + 2;
       } else {
         // if img not loading properly
         console.log("no comic displaying");
@@ -99,7 +97,7 @@ const getOnLoad = () => {
 };
 
 const getFirst = () => {
-  alert("start of comic");
+  alert("go to the start of comic");
   if (curComic === 1) {
     // console.log("getFirst inside if", curComic, lastComic);
     return;
@@ -157,6 +155,9 @@ const getRandom = () => {
 const getSearch = () => {
   const searchInputValue = document.getElementById("searchInput").value;
   if (searchInputValue === "") {
+    return;
+  } else if (searchInputValue >= 8 || searchInputValue < 1) {
+    alert("invalid page #");
     return;
   }
   comicId = searchInputValue;
