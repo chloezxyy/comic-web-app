@@ -46,7 +46,6 @@ nav {
   text-decoration: none;
   list-style: none;
 }
-
 #spinner:not([hidden]) {
   position: fixed;
   top: 0;
