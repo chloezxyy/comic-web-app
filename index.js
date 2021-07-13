@@ -1,167 +1,120 @@
-const dropDownSelection = () => {
-  // if select 1, hide both left and right comic, left middle
-  // if select 2, hide left
-  // if select 3, show all -> default 3 screens
-};
-
 const spinner = document.getElementById("spinner");
+
+let comicId; // middle comic to display
+let selectedComicNumber = 3; // onload display 3 comics
+
 let curComic;
 let lastComic;
-let comicId;
-let prevComicId = comicId - 1;
-let nextComicId = comicId + 1;
+let prevComicId = comicId - selectedComicNumber;
+let nextComicId = comicId + selectedComicNumber;
 
-async function getComic() {
-  let prevComicFetch = fetch(
-    `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${prevComicId}`
-  );
-  let comicFetch = fetch(
-    `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${comicId}`
-  );
-  let nextComicFetch = fetch(
-    `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${nextComicId}`
-  );
-  let resData = [];
-  await Promise.all([prevComicFetch, comicFetch, nextComicFetch])
-    .then((values) => Promise.all(values.map((value) => value.json())))
-    .then(function (responses) {
-      // Get a JSON object from each of the responses
-      return Promise.all(responses.map((res) => res));
-    })
-    .then((data) => {
-      console.log("data", data);
-      return resData.push(data);
-    })
-    .catch(function (error) {
-      // if there's an error, log it
-      console.log("error", error);
-    });
-  // console.log("resData", resData);
-  return resData;
-}
+const getArrOfComicId = () => {
+  let comicArr = [];
+  const evalIds = (idNum) => {
+    // overflow, min=1 / max=2475
+    if (idNum > 2475) {
+      return idNum - 2475;
+    } else if (idNum < 1) {
+      // underflow
+      return idNum + 2475;
+    }
+    // newly evaluated number
+    return idNum;
+  };
 
-async function showComic() {
+  if (selectedComicNumber === 1) {
+    comicArr = [comicId];
+  } else if (selectedComicNumber === 3) {
+    comicArr = [comicId - 1, comicId, comicId + 1];
+  } else if (selectedComicNumber === 5) {
+    comicArr = [comicId - 2, comicId - 1, comicId, comicId + 1, comicId + 2];
+  }
+
+  // return evaluated arr of ids for fetch processing
+  return comicArr.map((idArr) => evalIds(idArr));
+};
+
+async function getComic(selectedComicNumber, comicId) {
+  console.log("getComic");
   spinner.removeAttribute("hidden");
-  let comicJson = await getComic();
-  comicJson = comicJson[0];
   spinner.setAttribute("hidden", "");
 
-  if (comicJson) {
-    for (let i = 0; i < comicJson.length - 2; i++) {
-      if (comicJson[i].img) {
-        prevComicTitle.innerHTML = `${comicJson[i].num} - ${comicJson[i].title}`;
-        comicTitle.innerHTML = `${comicJson[i + 1].num} - ${
-          comicJson[i + 1].title
-        }`;
-        nextComicTitle.innerHTML = `${comicJson[i + 2].num} - ${
-          comicJson[i + 2].title
-        }`;
-      }
+  let comicIdArr = getArrOfComicId(selectedComicNumber);
 
-      comicImgPrev.style.maxWidth = "20%";
-      comicImgPrev.style.height = "auto";
-      comicImgPrev.src = comicJson[i].img;
+  console.log("getComic", comicIdArr);
 
-      comicImg.style.maxWidth = "40%";
-      comicImg.style.height = "auto";
-      comicImg.src = comicJson[i + 1].img;
+  const getComicData = await Promise.all(
+    comicIdArr.map(async (id) => {
+      const res = await fetch(
+        `https://intro-to-js-playground.vercel.app/api/xkcd-comics/${id}`
+      );
+      return res.json();
+    })
+  );
+  // map each comicId call into HTML element
+  getComicData.map((res) => console.log("RES", res));
+}
 
-      comicImgNext.style.maxWidth = "20%";
-      comicImgNext.style.height = "auto";
-      comicImgNext.src = comicJson[i + 2].img;
-
-      // assign num to current var curComic
-
-      curComic = comicJson[i].num;
-      console.log("hiak", lastComic);
-
-      if (comicId === 6) {
-        // onload to define last comic
-        lastComic = comicJson[i].num;
-        console.log("hiak", lastComic);
-        lastInput.innerHTML = lastComic + 1;
-      } else {
-        // if img not loading properly
-        console.log("no comic displaying");
-      }
-    }
+function displayComicSection() {
+  let dropDownVal = document.getElementById("selectComicNumber").value;
+  selectedComicNumber = +dropDownVal;
+  let comicContent = document.getElementById("comic-content");
+  comicContent.innerHTML = "";
+  console.log("selectedComicNumber", selectedComicNumber);
+  // generate 1/3/5 elements, start iterating at id = 1, to 3 and to 5 elements in the comicIdArr
+  for (let i = 1; i < selectedComicNumber + 1; i++) {
+    let displayComics = `<div id="comic-title-${i}" class="comic-title-${i}"></div>
+    <div id="comic-image-${i}"></div>`;
+    comicContent.append(displayComics);
   }
+  getComic(selectedComicNumber, comicId);
 }
 
 const getOnLoad = () => {
-  comicId = 6;
+  comicId = 2;
   curComic = comicId;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
+  displayComicSection();
+  getComic(selectedComicNumber, comicId);
+};
+
+const getNext = () => {
+  comicId = comicId + selectedComicNumber;
+  curComic = comicId;
+  getComic(selectedComicNumber, comicId);
+};
+const getPrev = () => {
+  comicId = comicId - selectedComicNumber;
+  curComic = comicId;
+  getComic(selectedComicNumber, comicId);
+};
+const getLast = () => {
+  alert("last page of comic");
+  comicId = 2475;
+  curComic = comicId;
+  getComic(selectedComicNumber, comicId);
 };
 
 const getFirst = () => {
   alert("go to the start of comic");
-  if (curComic === 1) {
-    // console.log("getFirst inside if", curComic, lastComic);
-    return;
-  }
   comicId = 2;
   curComic = comicId;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
-};
-const getNext = () => {
-  if (curComic >= lastComic) {
-    alert("end of comic");
-    return;
-  }
-  comicId = comicId + 1;
-  curComic = comicId;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
-};
-const getPrev = () => {
-  if (curComic <= 1) {
-    return;
-  }
-  comicId = comicId - 1;
-  curComic = comicId;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
-};
-const getLast = () => {
-  if (curComic === lastComic) {
-    alert("last page of comic");
-    return;
-  }
-  comicId = 7;
-  curComic = comicId;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
+  getComic(selectedComicNumber, comicId);
 };
 
 const getRandom = () => {
-  comicId = Math.floor(Math.random() + 0.1 * 7);
-  if (!lastComic) {
-    alert("something went wrong, try refreshing the page");
-  }
-  comicId = curComic;
-  lastComic = 6;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
+  comicId = Math.floor(Math.random() * 2475);
+  curComic = comicId;
+  getComic(selectedComicNumber, comicId);
 };
+
 const getSearch = () => {
   const searchInputValue = document.getElementById("searchInput").value;
   if (searchInputValue === "") {
     return;
   }
-  comicId = searchInputValue;
-  curComic = comicId;
-  prevComicId = comicId - 1;
-  nextComicId = comicId + 1;
-  showComic();
+  comicId = +searchInputValue;
+  curComic = +comicId;
+  getComic(selectedComicNumber, comicId);
 };
 
 // handle button click event
@@ -171,3 +124,4 @@ last.addEventListener("click", getLast);
 prev.addEventListener("click", getPrev);
 random.addEventListener("click", getRandom);
 searchBtn.addEventListener("click", getSearch); // search specific number button
+selectComicNumber.addEventListener("change", displayComicSection); // search specific number button
