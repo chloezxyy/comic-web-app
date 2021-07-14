@@ -11,8 +11,8 @@
   </head>
   <!-- execute JS func immediately after page has loaded -->
   <body onload="getOnLoad()">
-    <div>
-      <h2 class="title">COMICCCZZ</h2>
+    <div class="page">
+      <h2 class="title">Comic</h2>
       <nav>
         <button id="first" class="button">First</button>
         <button id="prev" class="button">Prev</button>
@@ -29,26 +29,17 @@
       <div id="search-container">
         <label for="searchInput">
           Search comic number from 1 to
-          <span id="lastInput">~</span>
+          <span id="lastInput">2475</span>
         </label>
         <br />
         <br />
-        <div id="spinner"></div>
+        <div id="loader"></div>
         <input type="number" id="searchInput" min="1" />
         <button class="button search" id="searchBtn">Search</button>
       </div>
       <br />
       <br />
-      <div id="comic-content">
-        <!-- <br />
-        <div id="comic-title" class="comic-title">comic-title</div>
-        <img
-          id="comic-image"
-          src=""
-          alt="comic img "
-          style="max-width: 10%; height: auto"
-        /> -->
-      </div>
+      <div id="comic-content"></div>
     </div>
     <script type="text/javascript" src="index.js"></script>
   </body>
