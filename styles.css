@@ -12,6 +12,20 @@
 .title {
   padding: 10px;
 }
+
+#error {
+  color: darkred;
+  border: 2px solid rgb(255, 0, 0);
+  width: max-content;
+  padding: 10px;
+  text-align: center;
+  display: inline-flex;
+}
+
+.hidden {
+  display: none !important;
+}
+
 nav {
   display: flex;
   max-width: 560px;

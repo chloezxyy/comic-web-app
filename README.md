@@ -19,6 +19,6 @@ Functionalities:
 - Find specific comic unmber
 - Buttons functionalities(next, prev, random, first, last)
 - Loading spinner enabled when fetching data
-- Show error if comic number is not found - alert() with invalid input value
+- Show error message if comic number is not found
 - Dropdown to select 1, 3 or 5 comics at a time
 - Get the first and the last comic

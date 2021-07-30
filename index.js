@@ -1,6 +1,7 @@
 let comicId; // middle comic to display
 let selectedComicNumber = 3; // onload display 3 comics
 let loader = document.getElementById("loader");
+let errorMsg = document.querySelector("#error");
 
 // evaluate negative to positive comicIds
 const getArrOfComicId = () => {
@@ -87,6 +88,7 @@ function displayComicSection() {
 }
 
 const getOnLoad = () => {
+  errorMsg.classList.add("hidden");
   comicId = 2;
   displayComicSection(); // initialize HTML element
   getComic(); // retrieve comic from api
@@ -131,8 +133,6 @@ const getRandom = () => {
 
 // search for specific comic number
 const getSearch = () => {
-  let errorMsg = document.querySelector("#error");
-  errorMsg.classList.add("hidden");
   loader.style.display = "";
   const searchInputValue = document.getElementById("searchInput").value;
   if (searchInputValue === "") {
@@ -142,9 +142,6 @@ const getSearch = () => {
     isNaN(searchInputValue) ||
     searchInputValue < 1
   ) {
-    alert(
-      "You have input an invalid comic number, please select a number from 1 to 2457"
-    );
     errorMsg.classList.remove("hidden");
     loader.style.display = "none";
   } else {
