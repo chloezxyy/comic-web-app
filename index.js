@@ -2,6 +2,7 @@ let comicId; // middle comic to display
 let selectedComicNumber = 3; // onload display 3 comics
 let loader = document.getElementById("loader");
 
+// evaluate negative to positive comicIds
 const getArrOfComicId = () => {
   let comicArr = [];
   const evalIds = (idNum) => {
@@ -16,6 +17,7 @@ const getArrOfComicId = () => {
     return idNum;
   };
 
+  // get list of comicIds according to selected number of comic
   if (selectedComicNumber === 1) {
     comicArr = [comicId];
   } else if (selectedComicNumber === 3) {
@@ -28,23 +30,26 @@ const getArrOfComicId = () => {
   return comicArr.map((idArr) => evalIds(idArr));
 };
 
-async function getComic(selectedComicNumber) {
-  let comicIdArr = getArrOfComicId(selectedComicNumber);
-
+// insert comic data into element to be rendered
+async function getComic() {
+  // get array of comic id
+  let comicIdArr = getArrOfComicId();
   const appendComicAndTitle = (comicTitleDiv, comicDiv, fetchComicData) => {
     let comicTitleId = document.querySelector(comicTitleDiv);
+    let comicImgDiv = document.querySelector(comicDiv);
+    let comicImg = document.createElement("img");
+
     comicTitleId.innerHTML = "";
     comicTitleId.innerHTML = fetchComicData.num + " - " + fetchComicData.title;
-
-    let comicImgDiv = document.querySelector(comicDiv);
     comicImgDiv.innerHTML = "";
-    let comicImg = document.createElement("img");
     comicImg.setAttribute("class", "comic-image");
     comicImg.src = fetchComicData.img;
     comicImg.alt = fetchComicData.alt;
+
     comicImgDiv.append(comicImg);
   };
 
+  // fetch comics from endpoint
   const getComicData = await Promise.all(
     comicIdArr.map(async (id) => {
       const res = await fetch(
@@ -64,6 +69,7 @@ async function getComic(selectedComicNumber) {
   }, setTimeout(displayLoading, 500));
 }
 
+// initialize div elements to be rendered
 function displayComicSection() {
   loader.style.display = "";
   let dropDownVal = document.getElementById("selectComicNumber").value;
@@ -71,50 +77,59 @@ function displayComicSection() {
   let comicContent = document.getElementById("comic-content");
   comicContent.innerHTML = "";
 
+  // generate comic element/content depending on selected comic #
   for (let i = 1; i < selectedComicNumber + 1; i++) {
     let displayComics = `<div id="comic-grid"><div id="comic-title-${i}" class="comic-title-${i}"></div>
     <div id="comic-image-${i}" class="comic-image"></div></div>`;
     comicContent.innerHTML += displayComics;
   }
-  getComic(selectedComicNumber);
+  getComic();
 }
 
 const getOnLoad = () => {
   comicId = 2;
   displayComicSection(); // initialize HTML element
-  getComic(selectedComicNumber); // retrieve comic from api
+  getComic(); // retrieve comic from api
 };
 
+// get next array of comicIds
 const getNext = () => {
   loader.style.display = "";
   comicId = comicId + selectedComicNumber;
-  getComic(selectedComicNumber);
+  getComic();
 };
+
+// get previous array of comicIds
 const getPrev = () => {
   loader.style.display = "";
   comicId = comicId - selectedComicNumber;
-  getComic(selectedComicNumber);
+  getComic();
 };
+
+// get last comicId
 const getLast = () => {
   loader.style.display = "";
   alert("last page of comic");
   comicId = 2475;
-  getComic(selectedComicNumber);
+  getComic();
 };
 
+// get first comicId
 const getFirst = () => {
   loader.style.display = "";
   alert("go to the start of comic");
   comicId = 2;
-  getComic(selectedComicNumber);
+  getComic();
 };
 
+// generate a random comicId and display as middle comic
 const getRandom = () => {
   loader.style.display = "";
   comicId = Math.floor(Math.random() * 2475);
-  getComic(selectedComicNumber);
+  getComic();
 };
 
+// search for specific comic number
 const getSearch = () => {
   loader.style.display = "";
   const searchInputValue = document.getElementById("searchInput").value;
@@ -129,10 +144,11 @@ const getSearch = () => {
     loader.style.display = "none";
   } else {
     comicId = +searchInputValue;
-    getComic(selectedComicNumber);
+    getComic();
   }
 };
 
+// display loading bar when fetching comic from endpoint
 const displayLoading = () => {
   loader.style.display = "none";
 };
