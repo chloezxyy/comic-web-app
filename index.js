@@ -79,7 +79,7 @@ function displayComicSection() {
 
   // generate comic element/content depending on selected comic #
   for (let i = 1; i < selectedComicNumber + 1; i++) {
-    let displayComics = `<div id="comic-grid"><div id="comic-title-${i}" class="comic-title-${i}"></div>
+    let displayComics = `<div id="comic-grid"><div id="comic-title-${i}" class="comic-title"></div>
     <div id="comic-image-${i}" class="comic-image"></div></div>`;
     comicContent.innerHTML += displayComics;
   }
@@ -140,7 +140,9 @@ const getSearch = () => {
     isNaN(searchInputValue) ||
     searchInputValue < 1
   ) {
-    alert("invalid comic #");
+    alert(
+      "You have input an invalid comic number, please select a number from 1 to 2457"
+    );
     loader.style.display = "none";
   } else {
     comicId = +searchInputValue;
@@ -152,6 +154,18 @@ const getSearch = () => {
 const displayLoading = () => {
   loader.style.display = "none";
 };
+
+function errorMessage() {
+  var error = document.getElementById("error");
+  if (isNaN(document.getElementById("number").value)) {
+    // Changing content and color of content
+    error.textContent =
+      "Invalid comic number, pick a number from 1 to 2475 instead.";
+    error.style.color = "red";
+  } else {
+    error.textContent = "";
+  }
+}
 
 // handle button click event
 first.addEventListener("click", getFirst);

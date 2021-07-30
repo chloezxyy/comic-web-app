@@ -5,6 +5,12 @@
   text-align: center;
   text-decoration: none;
   list-style: none;
+  font-family: "Lucida Console", "Courier New", monospace;
+  background-color: beige;
+}
+
+.title {
+  padding: 10px;
 }
 nav {
   display: flex;
@@ -16,12 +22,12 @@ nav {
 }
 
 .button {
-  background-color: #0750d8;
+  background-color: #58c013;
   color: white;
   font-weight: bold;
   padding: 5px;
   border-radius: 4px;
-  border: 2px solid rgb(255, 81, 0);
+  border: 2px solid rgb(255, 155, 6);
   box-shadow: 0 0 3px rgb(0 0 0);
   cursor: pointer;
   /* font-family: "Patrick Hand SC", cursive; */
@@ -36,31 +42,47 @@ nav {
   text-align: center;
 }
 
+#comic-title {
+  background-color: white;
+}
+
+#selectComicNumber {
+  border-radius: 10px;
+  padding: 5px;
+  background-color: white;
+}
+
+#header {
+  width: 100%;
+  position: fixed;
+  background: #333;
+  padding: 10px 0;
+  color: #fff;
+}
+
+#searchInput {
+  padding: 5px;
+  background-color: white;
+}
+
 #comic-grid {
   max-width: 17%;
   margin: 0.5%;
   padding: 0.5%;
   display: inline-block;
   vertical-align: middle;
-  border: solid 2px #0750d8;
+  border: solid 2px rgb(255, 155, 6);
+  border-radius: 10px;
+  background-color: white;
 }
 
-.comic-image {
+.comic-image,
+.comic-title {
   text-align: center;
   padding: 5px;
   width: 100%;
   height: auto;
-}
-
-#spinner:not() {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: white;
 }
 
 #loader {
@@ -71,11 +93,12 @@ nav {
   width: 120px;
   height: 120px;
   margin: -76px 0 0 -76px;
-  border: 10px solid #f3f3f3;
+  border: 10px solid #58c013;
   border-radius: 50%;
-  border-top: 16px solid #0750d8;
+  border-top: 16px solid rgb(255, 155, 6);
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
+  background-color: transparent;
 }
 @-webkit-keyframes spin {
   0% {
