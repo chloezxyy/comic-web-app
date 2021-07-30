@@ -1,22 +1,23 @@
 ﻿# comic-web-app
- 
- Link to app
- How to set up / install / download the folder
- Brief explaination on project
 
-Completed
+This app is part of the Fundamentals in Javascript course requirement given by SUTD. It aims for students to deliver a frontend application in Vanilla Javascript.
 
-- find specific comic unmber
-- buttons functionalities(next, prev, random, first, last)
-- show next and prev image on left and right
-- loading spinner enabled
-- show error if comic number is not found - alert() - invalid input value
-- select element to show 1/3/5 comics at a time
-- display correct comic on search
-- loading bar when fetching api
+End of Module project (Capstone Project)
 
-Todo
+- To implement a xkcd comic reader
+- No third-party script/library for this project. Only plain Javascript and DOM API is allowed
 
-- documentation
-- ui revamp
-  -- add error messages instead of alerts
+1.  Create a custom website to display 3 comics with comic title, comic image, and 3 buttons above it (prev, random, next) to control what comics will show.
+
+How to set up / install / download the folder
+
+1. git clone this project into local folder
+2. Open with VS code, right click onto index.html and Open as Default Browser
+
+Functionalities:
+
+- Find specific comic unmber
+- Buttons functionalities(next, prev, random, first, last)
+- Loading spinner enabled when fetching data
+- Show error if comic number is not found - alert() with invalid input value
+- Dropdown to select 1, 3 or 5 comics at a time

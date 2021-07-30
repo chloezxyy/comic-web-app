@@ -131,6 +131,8 @@ const getRandom = () => {
 
 // search for specific comic number
 const getSearch = () => {
+  let errorMsg = document.querySelector("#error");
+  errorMsg.classList.add("hidden");
   loader.style.display = "";
   const searchInputValue = document.getElementById("searchInput").value;
   if (searchInputValue === "") {
@@ -143,8 +145,10 @@ const getSearch = () => {
     alert(
       "You have input an invalid comic number, please select a number from 1 to 2457"
     );
+    errorMsg.classList.remove("hidden");
     loader.style.display = "none";
   } else {
+    errorMsg.classList.add("hidden");
     comicId = +searchInputValue;
     getComic();
   }
@@ -154,18 +158,6 @@ const getSearch = () => {
 const displayLoading = () => {
   loader.style.display = "none";
 };
-
-function errorMessage() {
-  var error = document.getElementById("error");
-  if (isNaN(document.getElementById("number").value)) {
-    // Changing content and color of content
-    error.textContent =
-      "Invalid comic number, pick a number from 1 to 2475 instead.";
-    error.style.color = "red";
-  } else {
-    error.textContent = "";
-  }
-}
 
 // handle button click event
 first.addEventListener("click", getFirst);
