@@ -2,6 +2,7 @@ let comicId; // middle comic to display
 let selectedComicNumber = 3; // onload display 3 comics
 let loader = document.getElementById("loader");
 let errorMsg = document.querySelector("#error");
+let availComic = document.querySelector("#search-container");
 
 // evaluate negative to positive comicIds
 const getArrOfComicId = () => {
@@ -143,9 +144,11 @@ const getSearch = () => {
     searchInputValue < 1
   ) {
     errorMsg.classList.remove("hidden");
+    availComic.classList.add("bold");
     loader.style.display = "none";
   } else {
     errorMsg.classList.add("hidden");
+    availComic.classList.remove("bold");
     comicId = +searchInputValue;
     getComic();
   }

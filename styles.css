@@ -26,6 +26,10 @@
   display: none !important;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 nav {
   display: flex;
   max-width: 560px;
